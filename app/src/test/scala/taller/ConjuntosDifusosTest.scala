@@ -99,7 +99,7 @@ class ConjuntosDifusosTest extends AnyFunSuite {
     val B: conj.ConjDifuso = n => math.min((n.toDouble / 4.0) + 0.25, 1.0) // desplaza +0.25 (exacto)
     val C: conj.ConjDifuso = n => math.min(n.toDouble / 4.0, 1.0)          // igual a A
 
-    assert(conj.inclusion(A, B))   // B >= A en cualquier n
+    assert(conj.inclusion(A, B))   // B >= A en todos los valores de n
     assert(!conj.inclusion(B, A))  // inversa falsa
     assert(conj.igualdad(A, C))    // iguales
     assert(!conj.igualdad(A, B)) // No iguales
