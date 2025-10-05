@@ -1,7 +1,5 @@
 package taller
 
-import scala.annotation.tailrec
-
 class ConjuntosDifusos() {
   type ConjDifuso = Int => Double
   def pertenece(elem: Int, s: ConjDifuso): Double = {
@@ -17,8 +15,6 @@ class ConjuntosDifusos() {
   }
 
   def complemento(c: ConjDifuso): ConjDifuso = {
-    // Se aplica la fórmula expresada en el PDF 1 - fs1(x)
-    (n: Int) => 1.0 - c(n)
   }
 
   def union(cd1: ConjDifuso, cd2: ConjDifuso): ConjDifuso = {
@@ -30,16 +26,7 @@ class ConjuntosDifusos() {
     (n: Int) => math.min(cd1(n), cd2(n))
   }
   def inclusion(cd1: ConjDifuso, cd2: ConjDifuso): Boolean = {
-    // Se agrega una función recursiva de cola para recorrer el intervalo [0,1000]
-    @tailrec
-    def inclusionAux(n: Int): Boolean =
-      if (n > 1000) true   // Condición de parada
-      else if (cd1(n) > cd2(n)) false   // Si el elemento del conjunto difuso S1 no está contenido en S2
-      else inclusionAux(n + 1)   // Llamada recursiva
-    inclusionAux(0)   // Se empieza en n = 0
   }
   def igualdad(cd1: ConjDifuso, cd2: ConjDifuso): Boolean = {
-    // En caso de cumplirse ambas condiciones, significa que ningún elemento entre S1 y S2 es diferente de su par correspondiente
-    inclusion(cd1, cd2) && inclusion(cd2, cd1)
   }
 }
