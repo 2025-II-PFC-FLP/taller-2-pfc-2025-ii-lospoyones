@@ -6,7 +6,7 @@ import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class BuscarListaTest extends AnyFunSuite {
-  val objBuscarLista = new BuscarLista()
+  val objBuscarLista = new ConjuntosDifusos()
 
   test("Encontrar 3 en List(1, 2, 3, 4, 5)") {
     assert(objBuscarLista.buscarElemento(List(1, 2, 3, 4, 5), 3))
