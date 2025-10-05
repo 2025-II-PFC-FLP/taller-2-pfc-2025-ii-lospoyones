@@ -1,8 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/lEw1Qm1j)
-# Asignación: [Nombre de la asignación]
+# Asignación: Taller #2: Funciones de alto orden - Conjuntos difusos
 
-**Fecha:** [DD/MM/AAAA]
-**Curso:** [Nombre del Curso]
+**Fecha:** 05/10/2025
+
+**Curso:** Fundamentos de Programación Funcional y concurrente - 2025-2
 
 ---
 
@@ -10,13 +11,12 @@
 
 | Nombre Completo | Código | Rol            | Correo Electrónico        |
 | --------------- | ------ | -------------- | ------------------------- |
-| [Estudiante 1]  | 123456 | [Líder/Colab.] | [correo1@institucion.edu] |
-| [Estudiante 2]  | 123457 | [Colaborador]  | [correo2@institucion.edu] |
-| [Estudiante 3]  | 123458 | [Colaborador]  | [correo3@institucion.edu] |
+| Sebastián Sáenz Mejía | 2459528 | Líder/Colab. | saenz.sebastian@correounivalle.edu.co |
+| Samuel Romero Martínez | 2459464 | Colaborador | samuel.romero@correounivalle.edu.co |
+| Miguel Angel Uribe    | 2459430 | Colaborador | miguel.uribe@correounivalle.edu.co  |
 
 ---
 
 ## 📌 Descripción de la Asignación
 
-[Breve párrafo explicando el propósito y objetivos del taller (4-6 líneas). Ejemplo:]
-_"Este taller busca analizar [tema principal] mediante [metodología]. Los objetivos incluyen [objetivo 1], [objetivo 2] y [objetivo 3], aplicando conceptos vistos en clase como [concepto relevante]."_
+Este taller explora el concepto de conjuntos difusos en informática, partiendo de la función característica tradicional y su extensión propuesta por Lofti Zadeh. A diferencia de los conjuntos clásicos, donde la pertenencia de un elemento es precisa, los conjuntos difusos permiten grados de pertenencia entre 0 y 1, modelando mejor situaciones reales donde la clasificación no es absoluta. El objetivo principal es implementar y manipular conjuntos difusos de forma funcional, aplicando funciones de alto orden para representar operaciones como pertenencia, unión, intersección y complemento. Así, se busca comprender cómo la programación funcional facilita el modelado flexible y expresivo de problemas complejos en la vida cotidiana y la informática.
