@@ -18,14 +18,14 @@ class ConjuntosDifusos() {
     // Implementaci´on de la funci´on complemento
   ...
   }
-  4
+
   def union(cd1: ConjDifuso, cd2: ConjDifuso): ConjDifuso = {
-    // Implementaci´on de la funci´on union
-  ...
+    //Se aplica la formula especificada en el PDF
+    (n: Int) => math.max(cd1(n), cd2(n))
   }
   def interseccion(cd1: ConjDifuso, cd2: ConjDifuso): ConjDifuso = {
-    // Implementaci´on de la funci´on interseccion
-  ...
+    //Se aplica la formula especificada en el PDF
+    (n: Int) => math.min(cd1(n), cd2(n))
   }
   def inclusion(cd1: ConjDifuso, cd2: ConjDifuso): Boolean = {
     // Implementaci´on de la funci´on inclusion
