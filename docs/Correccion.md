@@ -19,8 +19,8 @@
 
 ### Argumentando sobre corrección de programas recursivos
 
-Sea \( f : A \rightarrow B \) una función, y \( A \) un conjunto definido recursivamente (por ejemplo, los números naturales).  
-Sea \( P_f \) un programa recursivo desarrollado en *Scala* que calcula \( f \).  
+Sea $$( f : A \rightarrow B $$) una función, y $$( A $$) un conjunto definido recursivamente (por ejemplo, los números naturales).  
+Sea $$( P_f $$) un programa recursivo desarrollado en *Scala* que calcula $$( f $$).  
 Queremos demostrar que:
 
 $
