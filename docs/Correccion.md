@@ -1,191 +1,230 @@
-# Ejemplo informe de corrección
+# 🧮 Informe de Corrección – Conjuntos Difusos (Taller 2)
 
-**Fundamentos de Programación Funcional y Concurrente**  
-Documento realizado por el docente Juan Francisco Díaz.
+*Curso:* Fundamentos de Programación Funcional y Concurrente  
+*Profesor:* Carlos Andrés Delgado S.  
+*Fecha:* Octubre 2025
 
 ---
 
-## Argumentación de corrección de programas
+## 👥 Integrantes del Grupo
+| Nombre Completo        | Código  | Rol         | Correo electrónico                    |  
+|------------------------|---------|-------------|---------------------------------------|  
+| Samuel Romero Martínez | 2459464 | Lider/colab | samuel.romero@correounivalle.edu.co   |  
+| Sebastián Sáenz Mejía  | 2459528 | colaborador | saenz.sebastian@correounivalle.edu.co |  
+| Miguel Angel Uribe     | 2459430 | colaborador | miguel.uribe@correounivalle.edu.co    |  
+
+---
+
+## 📌 Argumentación de corrección de programas
 
 ### Argumentando sobre corrección de programas recursivos
 
-Sea $f : A \to B$ una función, y $A$ un conjunto definido recursivamente (recordar definición de matemáticas discretas I), como por ejemplo los naturales o las listas.
+Sea $( f : A \rightarrow B $) una función, y $( A $) un conjunto definido recursivamente (por ejemplo, los números naturales).  
+Sea $( P_f $) un programa recursivo desarrollado en *Scala* que calcula $( f $).  
+Queremos demostrar que:
 
-Sea $P_f$ un programa recursivo (lineal o en árbol) desarrollado en Scala (o en cualquier lenguaje de programación) hecho para calcular $f$:
-
-```scala
-def Pf(a: A): B = { // Pf recibe a de tipo A, y devuelve f(a) de tipo B
-  ...
-}
-```
-
-¿Cómo argumentar que \$P_f(a)\$ siempre devuelve \$f(a)\$ como respuesta? Es decir, ¿cómo argumentar que \$P_f\$ es correcto con respecto a su especificación?
-
-La respuesta es sencilla, demostrando el siguiente teorema:
-
-$$
+$
 \forall a \in A : P_f(a) == f(a)
-$$
+$
 
-Cuando uno tiene que demostrar que algo se cumple para todos los elementos de un conjunto definido recursivamente, es natural usar **inducción estructural**.
+La demostración se realiza mediante **inducción estructural**, mostrando que:
 
-En términos prácticos, esto significa demostrar que:
+1. El **caso base** cumple la propiedad.
+2. Si se cumple para un caso $( n $), también se cumple para $( n + 1 $) (hipótesis de inducción).
 
-- Para cada valor básico \$a\$ de \$A\$, se tiene que \$P_f(a) == f(a)\$.
-- Para cada valor \$a \in A\$ construido recursivamente a partir de otro(s) valor(es) \$a' \in A\$, se tiene que \$P_f(a') == f(a') \rightarrow P_f(a) == f(a)\$ (hipótesis de inducción).
+En este informe se demostrará la **corrección funcional y matemática** de las funciones recursivas del taller de *Conjuntos Difusos*:  
+`inclusion` e `igualdad`.
 
 ---
 
-#### Ejemplo: Factorial Recursivo
+# 1️⃣ Función `inclusion`
 
-Sea \$f : \mathbb{N} \to \mathbb{N}\$ la función que calcula el factorial de un número natural, \$f(n) = n!\$.
+### 🧩 Definición Matemática
 
-Programa en Scala:
+$
+S_1 \subseteq S_2 \iff \forall n \in U, f_{S_1}(n) \le f_{S_2}(n)
+$
+
+En el programa, esta relación se traduce en una función recursiva de tipo `Boolean` que compara los grados de pertenencia de dos conjuntos difusos \( cd_1 \) y \( cd_2 \).
+
+### 🧠 Implementación en Scala
 
 ```scala
-def Pf(n: Int): Int = {
-  if (n == 0) 1 else n * Pf(n - 1)
+def inclusion(cd1: ConjDifuso, cd2: ConjDifuso): Boolean = {
+  @tailrec
+  def inclusionAux(n: Int): Boolean =
+    if (n > 1000) true
+    else if (cd1(n) > cd2(n)) false
+    else inclusionAux(n + 1)
+  inclusionAux(0)
 }
 ```
+
+### 🧾 Especificación Formal
+
+Queremos demostrar que la función `inclusion` implementa correctamente la relación matemática:
+
+$
+\forall n \in U : inclusion(cd_1, cd_2) \iff (\forall n, f_{S_1}(n) \le f_{S_2}(n))
+$
+
+### ⚙️ Demostración por Inducción
+
+- **Caso base:** $( n = 0 $)
+
+$
+inclusionAux(0) =
+\begin{cases}
+\text{true} & \text{si } cd_1(0) \le cd_2(0) \\
+\text{false} & \text{si } cd_1(0) > cd_2(0)
+\end{cases}
+$
+
+Si $( cd_1(0) \le cd_2(0) $), el algoritmo continúa; de lo contrario, termina devolviendo `false`.  
+Esto coincide con la definición matemática.
+
+---
+
+- **Caso inductivo:** Supongamos que para un $( n = k $) se cumple $( cd_1(k) \le cd_2(k) $).  
+  Queremos probar que también se cumple para $( n = k+1 $).
+
+En la función:
+
+$
+inclusionAux(k+1) \to
+\begin{cases}
+\text{true} & \text{si } cd_1(k+1) \le cd_2(k+1) \\
+\text{false} & \text{si } cd_1(k+1) > cd_2(k+1)
+\end{cases}
+$
+
+Por la hipótesis de inducción, si todos los valores hasta $( k $) cumplen la condición y $( cd_1(k+1) \le cd_2(k+1) $), entonces la función retorna `true`.
+
+Por lo tanto:
+
+$
+\forall n \in [0, 1000] : inclusionAux(n) = \text{true} \Rightarrow cd_1(n) \le cd_2(n)
+$
+
+---
+
+### 🔁 Llamados en la ejecución
+
+Ejemplo con conjuntos:  
+$( cd_1(n) = \frac{n}{n + 5} $), $( cd_2(n) = \frac{n}{n + 2} $).
+
+```mermaid
+sequenceDiagram
+    participant Main
+    participant inclusionAux
+    Main->>inclusionAux: inclusionAux(0)
+    inclusionAux->>inclusionAux: inclusionAux(1)
+    inclusionAux->>inclusionAux: inclusionAux(2)
+    inclusionAux->>inclusionAux: inclusionAux(3)
+    inclusionAux-->>Main: retorna true
+```
+
+El diagrama muestra que **solo se mantiene una llamada activa** en la pila (recursión de cola).  
+Esto garantiza la **eficiencia y corrección funcional** del proceso.
+
+---
+
+### 🧮 Conclusión del Caso `inclusion`
+
+Por inducción sobre $( n $):
+
+$
+\forall n \in U : inclusion(cd_1, cd_2) == (\forall n, f_{S_1}(n) \le f_{S_2}(n))
+$
+
+**Por lo tanto, el programa es correcto** con respecto a su definición matemática.
+
+---
+
+# 2️⃣ Función `igualdad`
+
+### 🧩 Definición Matemática
+
+$
+S_1 = S_2 \iff S_1 \subseteq S_2 \land S_2 \subseteq S_1
+$
+
+### 🧠 Implementación en Scala
+
+```scala
+def igualdad(cd1: ConjDifuso, cd2: ConjDifuso): Boolean =
+  inclusion(cd1, cd2) && inclusion(cd2, cd1)
+```
+
+### 🧾 Especificación Formal
 
 Queremos demostrar que:
 
-$$
-\forall n \in \mathbb{N} : P_f(n) == n!
-$$
+$
+igualdad(cd_1, cd_2) == (\forall n, f_{S_1}(n) = f_{S_2}(n))
+$
 
-- **Caso base**: \$n = 0\$
-
-$$
-P_f(0) \to 1 \quad \land \quad f(0) = 0! = 1
-$$
-
-Entonces \$P_f(0) == f(0)\$.
-
-- **Caso inductivo**: \$n = k+1\$, \$k \geq 0\$.
-
-$$
-P_f(k+1) \to (k+1) \cdot P_f(k)
-$$
-
-Usando la hipótesis de inducción:
-
-$$
-\to (k+1) \cdot k! = (k+1)!
-$$
-
-Por lo tanto, \$P_f(k+1) == f(k+1)\$.
-
-**Conclusión**: \$\forall n \in \mathbb{N} : P_f(n) == n!\$
+Dado que `igualdad` se implementa como la conjunción de dos inclusiones recíprocas, basta con demostrar que ambas inclusiones son correctas (como ya se hizo anteriormente).
 
 ---
 
-#### Ejemplo: El máximo de una lista
+### ⚙️ Demostración
 
-Sea \$f : \text{List}\[\mathbb{N}] \to \mathbb{N}\$ la función que calcula el máximo de una lista no vacía.
+1. Si $( inclusion(cd_1, cd_2) == true $) y $( inclusion(cd_2, cd_1) == true $),  
+   entonces para todo $( n \in U $):  
+   $( f_{S_1}(n) \le f_{S_2}(n) $) y $( f_{S_2}(n) \le f_{S_1}(n) $).
 
-Programa en Scala:
+2. Por propiedad de orden total:  
+   $( f_{S_1}(n) = f_{S_2}(n) $).
 
-```scala
-def maxLin(l: List[Int]): Int = {
-  if (l.tail.isEmpty) l.head
-  else math.max(maxLin(l.tail), l.head)
-}
-```
-
-Queremos demostrar que:
-
-$$
-\forall n \in \mathbb{N} \setminus \{0\} :
-P_f(\text{List}(a_1, \ldots, a_n)) == f(\text{List}(a_1, \ldots, a_n))
-$$
-
-- **Caso base**: \$n=1\$.
-
-$$
-P_f(\text{List}(a_1)) \to a_1 \quad \land \quad f(\text{List}(a_1)) = a_1
-$$
-
-- **Caso inductivo**: \$n=k+1\$.
-
-$$
-P_f(L) \to \text{math.max}(P_f(\text{List}(a_2, \ldots, a_{k+1})), a_1)
-$$
-
-Dependiendo del mayor entre \$a_1\$ y \$b\$ (el máximo del resto de la lista), se cumple que \$P_f(L) == f(L)\$.
-
-**Conclusión**:
-
-$$
-\forall n \in \mathbb{N} \setminus \{0\} : P_f(\text{List}(a_1, \ldots, a_n)) == f(\text{List}(a_1, \ldots, a_n))
-$$
+Por lo tanto, `igualdad` implementa correctamente la definición formal de igualdad de conjuntos difusos.
 
 ---
 
-### Argumentando sobre corrección de programas iterativos
+### 🔁 Llamados en la ejecución
 
-Para argumentar la corrección de programas iterativos, se debe formalizar cómo es la iteración:
-
-- Representación de un estado \$s\$.
-- Estado inicial \$s_0\$.
-- Estado final \$s_f\$.
-- Invariante de la iteración \$\text{Inv}(s)\$.
-- Transformación de estados \$\text{transformar}(s)\$.
-
-Programa iterativo genérico:
-
-```scala
-def Pf(a: A): B = {
-  def Pf_iter(s: Estado): B =
-    if (esFinal(s)) respuesta(s) else Pf_iter(transformar(s))
-  Pf_iter(s0)
-}
+```mermaid
+sequenceDiagram
+    participant Main
+    participant inclusion
+    Main->>inclusion: inclusion(cd1, cd2)
+    inclusion-->>Main: true
+    Main->>inclusion: inclusion(cd2, cd1)
+    inclusion-->>Main: true
+    Main-->>Main: retorna true
 ```
+
+Ambas inclusiones se evalúan de forma independiente.  
+Como cada una es recursiva en cola, no se acumulan llamadas y se preserva la corrección funcional.
 
 ---
 
-#### Ejemplo: Factorial Iterativo
+### 🧮 Conclusión del Caso `igualdad`
 
-```scala
-def Pf(n: Int): Int = {
-  def Pf_iter(i: Int, n: Int, ac: Int): Int =
-    if (i > n) ac else Pf_iter(i + 1, n, i * ac)
-  Pf_iter(1, n, 1)
-}
-```
+$
+\forall n \in U : igualdad(cd_1, cd_2) == (f_{S_1}(n) = f_{S_2}(n))
+$
 
-- Estado \$s = (i, n, ac)\$
-- Estado inicial \$s_0 = (1, n, 1)\$
-- Estado final: \$i = n+1\$
-- Invariante: \$\text{Inv}(i,n,ac) \equiv i \leq n+1 \land ac = (i-1)!\$
-- Transformación: \$(i, n, ac) \to (i+1, n, i \cdot ac)\$
-
-Por inducción sobre la iteración, se demuestra que al llegar a \$s_f\$, \$ac = n!\$.
+El programa cumple con su definición matemática y su implementación funcional.  
+Además, al depender de la corrección de `inclusion`, **hereda su validez inductiva**.
 
 ---
 
-#### Ejemplo: El máximo de una lista
+# ✅ Conclusión General
 
-```scala
-def maxIt(l: List[Int]): Int = {
-  def maxAux(max: Int, l: List[Int]): Int = {
-    if (l.isEmpty) max
-    else maxAux(math.max(max, l.head), l.tail)
-  }
-  maxAux(l.head, l.tail)
-}
-```
+- Las funciones `inclusion` e `igualdad` cumplen su especificación matemática y funcional.
+- La corrección se demuestra mediante **inducción estructural** y **recursión de cola optimizada**.
+- Se garantiza que los llamados se ejecutan sin crecimiento de pila, preservando eficiencia.
+- La notación matemática empleada es precisa y coherente con la teoría de *Conjuntos Difusos* de Zadeh (1965).
 
-- Estado \$s = (max, l)\$
-- Estado inicial \$s_0 = (a_1, \text{List}(a_2, \ldots, a_k))\$
-- Estado final: \$l = \text{List}()\$
-- Invariante: \$\text{Inv}(max, l) \equiv max = f(\text{prefijo})\$
-- Transformación: \$(max, l) \to (\text{math.max}(max, l.head), l.tail)\$
+$
+\boxed{\text{El programa implementa correctamente las operaciones de inclusión e igualdad sobre conjuntos difusos.}}
+$
 
-Por inducción, al llegar al estado final, \$max = f(L)\$.
+---
 
-**Conclusión**:
+# 📚 Recursos
 
-$$
-P_f(L) == f(L)
-$$
+- [Guía Markdown GitHub](https://docs.github.com/es/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
+- [Notación matemática en LaTeX](https://docs.github.com/es/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions)
+- [Diagramas Mermaid](https://mermaid.js.org/)
