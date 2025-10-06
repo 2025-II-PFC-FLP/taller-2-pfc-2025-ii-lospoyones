@@ -24,7 +24,7 @@ Sea $$( P_f $$) un programa recursivo desarrollado en *Scala* que calcula $$( f 
 Queremos demostrar que:
 
 
-$$forall a \in A : P_f(a) == f(a)$$
+$$\forall a \in A : P_f(a) == f(a)$$
 
 
 La demostración se realiza mediante **inducción estructural**, mostrando que:
