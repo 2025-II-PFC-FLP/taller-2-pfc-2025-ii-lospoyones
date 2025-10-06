@@ -28,9 +28,9 @@ A través de una representación funcional del tipo `Int => Double`, se busca mo
 ## 1.1 Conjuntos Difusos
 
 Un conjunto difuso se define como una función característica:  
-$$
-f_S : U \rightarrow [0,1]
-$$  
+
+$f_S : U \rightarrow [0,1]$
+  
 donde:
 - Si $f_S(s) = 0$, el elemento *no pertenece* al conjunto.
 - Si $f_S(s) = 1$, el elemento *pertenece completamente*.
@@ -56,9 +56,9 @@ def pertenece(elem: Int, s: ConjDifuso): Double = s(elem)
 
 ## 2.2 Conjunto Difuso de Números Grandes
 Matemáticamente:  
-$$
-f(n) = \left( \frac{n}{n + d} \right)^e
-$$  
+
+$f(n) = \left( \frac{n}{n + d} \right)^e$
+  
 donde
 - $d \ge 1$
 - $e > 1$
@@ -85,15 +85,15 @@ Ejemplo:
 ## 2.3 Complemento, Unión e Intersección
 
 Formulación matemática:  
-$$
-f_{\neg S}(n) = 1 - f_S(n)
-$$  
-$$
-f_{S_1 \cup S_2}(n) = \max(f_{S_1}(n), f_{S_2}(n))
-$$  
-$$
-f_{S_1 \cap S_2}(n) = \min(f_{S_1}(n), f_{S_2}(n))
-$$
+
+$f_{\neg S}(n) = 1 - f_S(n)$
+  
+
+$f_{S_1 \cup S_2}(n) = \max(f_{S_1}(n), f_{S_2}(n))$
+  
+
+$f_{S_1 \cap S_2}(n) = \min(f_{S_1}(n), f_{S_2}(n))$
+
 
 Implementación:
 ```scala
@@ -121,13 +121,13 @@ Ejemplo conceptual:
 
 ### Definiciones matemáticas
 Inclusión:  
-$$
-S_1 \subseteq S_2 \iff \forall n \in U, f_{S_1}(n) \le f_{S_2}(n)
-$$  
+
+$S_1 \subseteq S_2 \iff \forall n \in U, f_{S_1}(n) \le f_{S_2}(n)$
+  
 Igualdad:  
-$$
-S_1 = S_2 \iff S_1 \subseteq S_2 \land S_2 \subseteq S_1
-$$
+
+$S_1 = S_2 \iff S_1 \subseteq S_2 \land S_2 \subseteq S_1$
+
 
 ### Implementación con Recursión de Cola
 ```scala
