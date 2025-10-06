@@ -111,7 +111,7 @@ $$\forall n \in [0, 1000] : inclusionAux(n) = \text{true} \Rightarrow cd_1(n) \l
 ### 🔁 Llamados en la ejecución
 
 Ejemplo con conjuntos:  
-$$\( cd_1(n) = \frac{n}{n + 5} $), $( cd_2(n) = \frac{n}{n + 2} $$).
+$$( cd_1(n) = \frac{n}{n + 5} $), $( cd_2(n) = \frac{n}{n + 2} )$$
 
 ```mermaid
 sequenceDiagram
