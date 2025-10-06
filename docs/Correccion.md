@@ -23,9 +23,9 @@ Sea $$( f : A \rightarrow B $$) una función, y $$( A $$) un conjunto definido r
 Sea $$( P_f $$) un programa recursivo desarrollado en *Scala* que calcula $$( f $$).  
 Queremos demostrar que:
 
-$
-\forall a \in A : P_f(a) == f(a)
-$
+
+$$forall a \in A : P_f(a) == f(a)$$
+
 
 La demostración se realiza mediante **inducción estructural**, mostrando que:
 
@@ -41,11 +41,11 @@ En este informe se demostrará la **corrección funcional y matemática** de las
 
 ### 🧩 Definición Matemática
 
-$
-S_1 \subseteq S_2 \iff \forall n \in U, f_{S_1}(n) \le f_{S_2}(n)
-$
 
-En el programa, esta relación se traduce en una función recursiva de tipo `Boolean` que compara los grados de pertenencia de dos conjuntos difusos \( cd_1 \) y \( cd_2 \).
+$$S_1 \subseteq S_2 \iff \forall n \in U, f_{S_1}(n) \le f_{S_2}(n)$$
+
+
+En el programa, esta relación se traduce en una función recursiva de tipo `Boolean` que compara los grados de pertenencia de dos conjuntos difusos $$( cd_1 $$) y $$( cd_2 $$).
 
 ### 🧠 Implementación en Scala
 
@@ -64,54 +64,54 @@ def inclusion(cd1: ConjDifuso, cd2: ConjDifuso): Boolean = {
 
 Queremos demostrar que la función `inclusion` implementa correctamente la relación matemática:
 
-$
-\forall n \in U : inclusion(cd_1, cd_2) \iff (\forall n, f_{S_1}(n) \le f_{S_2}(n))
-$
+
+$$\forall n \in U : inclusion(cd_1, cd_2) \iff (\forall n, f_{S_1}(n) \le f_{S_2}(n))$$
+
 
 ### ⚙️ Demostración por Inducción
 
 - **Caso base:** $( n = 0 $)
 
-$
-inclusionAux(0) =
+
+$$inclusionAux(0) =
 \begin{cases}
 \text{true} & \text{si } cd_1(0) \le cd_2(0) \\
 \text{false} & \text{si } cd_1(0) > cd_2(0)
 \end{cases}
-$
+$$
 
-Si $( cd_1(0) \le cd_2(0) $), el algoritmo continúa; de lo contrario, termina devolviendo `false`.  
+Si $$( cd_1(0) \le cd_2(0) $$), el algoritmo continúa; de lo contrario, termina devolviendo `false`.  
 Esto coincide con la definición matemática.
 
 ---
 
-- **Caso inductivo:** Supongamos que para un $( n = k $) se cumple $( cd_1(k) \le cd_2(k) $).  
-  Queremos probar que también se cumple para $( n = k+1 $).
+- **Caso inductivo:** Supongamos que para un $$( n = k $$) se cumple $$( cd_1(k) \le cd_2(k) $$).  
+  Queremos probar que también se cumple para $$( n = k+1 $$).
 
 En la función:
 
-$
-inclusionAux(k+1) \to
+
+$$inclusionAux(k+1) \to
 \begin{cases}
 \text{true} & \text{si } cd_1(k+1) \le cd_2(k+1) \\
 \text{false} & \text{si } cd_1(k+1) > cd_2(k+1)
-\end{cases}
-$
+\end{cases}$$
+
 
 Por la hipótesis de inducción, si todos los valores hasta $( k $) cumplen la condición y $( cd_1(k+1) \le cd_2(k+1) $), entonces la función retorna `true`.
 
 Por lo tanto:
 
-$
-\forall n \in [0, 1000] : inclusionAux(n) = \text{true} \Rightarrow cd_1(n) \le cd_2(n)
-$
+
+$$\forall n \in [0, 1000] : inclusionAux(n) = \text{true} \Rightarrow cd_1(n) \le cd_2(n)$$
+
 
 ---
 
 ### 🔁 Llamados en la ejecución
 
 Ejemplo con conjuntos:  
-$( cd_1(n) = \frac{n}{n + 5} $), $( cd_2(n) = \frac{n}{n + 2} $).
+$$( cd_1(n) = \frac{n}{n + 5} $), $( cd_2(n) = \frac{n}{n + 2} $$).
 
 ```mermaid
 sequenceDiagram
@@ -133,9 +133,9 @@ Esto garantiza la **eficiencia y corrección funcional** del proceso.
 
 Por inducción sobre $( n $):
 
-$
-\forall n \in U : inclusion(cd_1, cd_2) == (\forall n, f_{S_1}(n) \le f_{S_2}(n))
-$
+
+$$\forall n \in U : inclusion(cd_1, cd_2) == (\forall n, f_{S_1}(n) \le f_{S_2}(n))$$
+
 
 **Por lo tanto, el programa es correcto** con respecto a su definición matemática.
 
@@ -145,9 +145,9 @@ $
 
 ### 🧩 Definición Matemática
 
-$
-S_1 = S_2 \iff S_1 \subseteq S_2 \land S_2 \subseteq S_1
-$
+
+$$S_1 = S_2 \iff S_1 \subseteq S_2 \land S_2 \subseteq S_1$$
+
 
 ### 🧠 Implementación en Scala
 
@@ -160,9 +160,9 @@ def igualdad(cd1: ConjDifuso, cd2: ConjDifuso): Boolean =
 
 Queremos demostrar que:
 
-$
-igualdad(cd_1, cd_2) == (\forall n, f_{S_1}(n) = f_{S_2}(n))
-$
+
+$$igualdad(cd_1, cd_2) == (\forall n, f_{S_1}(n) = f_{S_2}(n))$$
+
 
 Dado que `igualdad` se implementa como la conjunción de dos inclusiones recíprocas, basta con demostrar que ambas inclusiones son correctas (como ya se hizo anteriormente).
 
@@ -170,12 +170,12 @@ Dado que `igualdad` se implementa como la conjunción de dos inclusiones recípr
 
 ### ⚙️ Demostración
 
-1. Si $( inclusion(cd_1, cd_2) == true $) y $( inclusion(cd_2, cd_1) == true $),  
-   entonces para todo $( n \in U $):  
-   $( f_{S_1}(n) \le f_{S_2}(n) $) y $( f_{S_2}(n) \le f_{S_1}(n) $).
+1. Si $$( inclusion(cd_1, cd_2) == true $$) y $$( inclusion(cd_2, cd_1) == true $$),  
+   entonces para todo $$( n \in U $$):  
+   $$( f_{S_1}(n) \le f_{S_2}(n) $$) y $$( f_{S_2}(n) \le f_{S_1}(n) $$).
 
 2. Por propiedad de orden total:  
-   $( f_{S_1}(n) = f_{S_2}(n) $).
+   $$( f_{S_1}(n) = f_{S_2}(n) $$).
 
 Por lo tanto, `igualdad` implementa correctamente la definición formal de igualdad de conjuntos difusos.
 
@@ -201,9 +201,9 @@ Como cada una es recursiva en cola, no se acumulan llamadas y se preserva la cor
 
 ### 🧮 Conclusión del Caso `igualdad`
 
-$
-\forall n \in U : igualdad(cd_1, cd_2) == (f_{S_1}(n) = f_{S_2}(n))
-$
+
+$$\forall n \in U : igualdad(cd_1, cd_2) == (f_{S_1}(n) = f_{S_2}(n))$$
+
 
 El programa cumple con su definición matemática y su implementación funcional.  
 Además, al depender de la corrección de `inclusion`, **hereda su validez inductiva**.
@@ -217,9 +217,9 @@ Además, al depender de la corrección de `inclusion`, **hereda su validez induc
 - Se garantiza que los llamados se ejecutan sin crecimiento de pila, preservando eficiencia.
 - La notación matemática empleada es precisa y coherente con la teoría de *Conjuntos Difusos* de Zadeh (1965).
 
-$
-\boxed{\text{El programa implementa correctamente las operaciones de inclusión e igualdad sobre conjuntos difusos.}}
-$
+
+$$\boxed{\text{El programa implementa correctamente las operaciones de inclusión e igualdad sobre conjuntos difusos.}}$$
+
 
 ---
 
